@@ -5,7 +5,7 @@
  * @package OtrsFilter\Common
  */
 
-namespace OtrsFilter\Common;
+namespace S7GreatFilter\Common;
 
 /**
  * Class Controller

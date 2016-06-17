@@ -6,9 +6,9 @@
  * @package OtrsFilter\AdminSettings
  */
 
-namespace OtrsFilter\AdminSettings;
+namespace S7GreatFilter\AdminSettings;
 
-use OtrsFilter\Common\Controller;
+use S7GreatFilter\Common\Controller;
 
 /**
  * Class Settings

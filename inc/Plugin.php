@@ -5,10 +5,10 @@
  * @package OtrsFilter
  */
 
-namespace OtrsFilter;
+namespace S7GreatFilter;
 
-use OtrsFilter\AdminSettings\Settings;
-use OtrsFilter\FrontController\PageTransform;
+use S7GreatFilter\AdminSettings\Settings;
+use S7GreatFilter\FrontController\PageTransform;
 
 /**
  * Class Plugin
@@ -98,6 +98,11 @@ class Plugin {
 		);
 	}
 
+	/**
+	 * Load scripts on front-end
+	 *
+	 * @return void
+	 */
 	public function front_end_scripts() {
 		wp_enqueue_script(
 			'react-js',
@@ -113,7 +118,7 @@ class Plugin {
 			'1',
 			true
 		);
-		$settings = \OtrsFilter\get_page_settings_by_id( get_the_ID() );
+		$settings = \S7GreatFilter\get_page_settings_by_id( get_the_ID() );
 		wp_localize_script( 'ot_filter_component',
 			'filter_objects',
 			array(

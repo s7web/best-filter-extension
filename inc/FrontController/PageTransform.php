@@ -5,9 +5,9 @@
  * @package OtrsFilter\FrontController
  */
 
-namespace OtrsFilter\FrontController;
+namespace S7GreatFilter\FrontController;
 
-use OtrsFilter\Common\Controller;
+use S7GreatFilter\Common\Controller;
 
 /**
  * Class PageTransform
@@ -24,7 +24,7 @@ class PageTransform extends Controller {
 	 */
 	public function template_redirect( $template ) {
 		$current_post_id = get_the_ID();
-		$settings        = \OtrsFilter\get_page_settings_by_id( $current_post_id );
+		$settings        = \S7GreatFilter\get_page_settings_by_id( $current_post_id );
 		if ( $settings ) {
 			$path_template = 'filter_template.php';
 			$new_template  = locate_template( array( $path_template ) );
@@ -38,10 +38,15 @@ class PageTransform extends Controller {
 		return $template;
 	}
 
+	/**
+	 * Provide data according to provided query from front-end
+	 *
+	 * @return void
+     */
 	public function provide_data() {
 
 		$page_id  = (int) $this->get( 'page_id' );
-		$settings = \OtrsFilter\get_page_settings_by_id( $page_id );
+		$settings = \S7GreatFilter\get_page_settings_by_id( $page_id );
 		$args    = array();
 		$params = $this->get( 'params' );
 		if ( false !== $params && (isset($params['categories']) || isset($params['tags'])) ) {
@@ -65,7 +70,7 @@ class PageTransform extends Controller {
 			}
 
 		} else {
-			$args         = \OtrsFilter\parse_settings( $settings );
+			$args         = \S7GreatFilter\parse_settings( $settings );
 			if(isset($args[0]) && isset($args[1])){
 				$post_type = $args[0]['post_type'];
 				$query1 = new \WP_Query($args[0]);

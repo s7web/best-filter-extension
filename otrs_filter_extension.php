@@ -1,19 +1,19 @@
 <?php
 /**
- * Plugin Name: Otrs plugin extension
+ * Plugin Name: Great filter
  * Plugin URI: www.example.com
- * Description: Filter plugin for otrs website
+ * Description: Filter posts by category and tag in front-end
  * Version: 0
  * Author: S7design
  * Author URI: http://www.s7designcreative.com/v2/
- * Text Domain: otrs-filter
+ * Text Domain: s7design-great-filter
  *
- * @package OtrsFilter
+ * @package S7GreatFilter
  */
 
-namespace OtrsFilter;
+namespace S7GreatFilter;
 
-use OtrsFilter\Autoloader\Autoloader;
+use S7GreatFilter\Autoloader\Autoloader;
 
 /**
  * Hooked with this action:
@@ -87,7 +87,12 @@ function get_page_settings_by_id( $id ) {
  */
 function parse_settings( array $settings ) {
 	$args = array();
-	if ( isset( $settings['settings']['filter'] ) &&  ( 'tags' === $settings['settings']['filter'] || 'categories' === $settings['settings']['filter'] || 'both' === $settings['settings']['filter'] ) ) {
+	if (
+		isset( $settings['settings']['filter'] )
+		&& ( 'tags' === $settings['settings']['filter']
+		     || 'categories' === $settings['settings']['filter']
+		     || 'both' === $settings['settings']['filter'] )
+	) {
 		switch ( $settings['settings']['filter'] ) {
 			case 'categories':
 				if ( isset( $settings['settings']['categories'] ) ) {
@@ -98,142 +103,21 @@ function parse_settings( array $settings ) {
 				break;
 			case 'tags':
 				if ( isset( $settings['settings']['tags'] ) ) {
-					$tags      = array_map( 'intval', $settings['settings']['tags'] );
+					$tags            = array_map( 'intval', $settings['settings']['tags'] );
 					$args['tag__in'] = $tags;
 				}
 				$args['post_type'] = 'post';
 				break;
-			case 'ref_categories':
-				$args['post_type'] = 'references';
 			case 'both':
 				if ( isset( $settings['settings']['categories'] ) ) {
-					$categories           = array_map( 'intval', $settings['settings']['categories'] );
+					$categories              = array_map( 'intval', $settings['settings']['categories'] );
 					$args[0]['category__in'] = $categories;
-					$args[0]['post_type'] = 'post';
+					$args[0]['post_type']    = 'post';
 				}
 				if ( isset( $settings['settings']['tags'] ) ) {
-					$tags      = array_map( 'intval', $settings['settings']['tags'] );
-					$args[1]['tag__in'] = $tags;
+					$tags                 = array_map( 'intval', $settings['settings']['tags'] );
+					$args[1]['tag__in']   = $tags;
 					$args[1]['post_type'] = 'post';
-				}
-				break;
-			default:
-				break;
-		}
-	}
-	if( isset( $settings['settings']['filter'] ) &&  ( 'ref_tags' === $settings['settings']['filter'] || 'ref_categories' === $settings['settings']['filter'] || 'both_ref' === $settings['settings']['filter'] ) ) {
-		switch ($settings['settings']['filter']) {
-			case 'ref_categories':
-				if (isset($settings['settings']['categories'])) {
-					$categories           = array_map('intval', $settings['settings']['categories']);
-					$args[ 'tax_query' ] = array(
-						array(
-							'taxonomy' => 'ref_categories',
-							'field'    => 'term_id',
-							'terms'    => $categories,
-						),
-					);
-				}
-				$args['post_type'] = 'references';
-				break;
-			case 'ref_tags':
-				if (isset($settings['settings']['tags'])) {
-					$tags            = array_map('intval', $settings['settings']['tags']);
-					$args[ 'tax_query' ] = array(
-						array(
-							'taxonomy' => 'ref_tags',
-							'field'    => 'term_id',
-							'terms'    => $tags,
-						),
-					);
-				}
-				$args['post_type'] = 'references';
-				break;
-			case 'both_ref':
-				if (isset($settings['settings']['categories'])) {
-					$categories           = array_map('intval', $settings['settings']['categories']);
-					$args[0][ 'tax_query' ] = array(
-						'relation' => 'OR',
-						array(
-							'taxonomy' => 'ref_categories',
-							'field'    => 'term_id',
-							'terms'    => $categories,
-						),
-					);
-					$args[0]['post_type']    = 'references';
-					$args[0]['posts_per_page'] = -1;
-				}
-				if (isset($settings['settings']['tags'])) {
-					$tags                 = array_map('intval', $settings['settings']['tags']);
-					$args[1][ 'tax_query' ] = array(
-						'relation' => 'OR',
-						array(
-							'taxonomy' => 'ref_tags',
-							'field'    => 'term_id',
-							'terms'    => $tags,
-						),
-					);
-					$args[1]['post_type'] = 'references';
-					$args[1]['posts_per_page'] = -1;
-				}
-				break;
-			default:
-				break;
-		}
-	}
-
-	if( isset( $settings['settings']['filter'] ) &&  ( 'portfolio_tags' === $settings['settings']['filter'] || 'portfolio_categories' === $settings['settings']['filter'] || 'both_port' === $settings['settings']['filter'] ) ) {
-		switch ($settings['settings']['filter']) {
-			case 'portfolio_categories':
-				if (isset($settings['settings']['categories'])) {
-					$categories           = array_map('intval', $settings['settings']['categories']);
-					$args[ 'tax_query' ] = array(
-						array(
-							'taxonomy' => 'portfolio_categories',
-							'field'    => 'term_id',
-							'terms'    => $categories,
-						),
-					);
-				}
-				$args['post_type'] = 'portfolio';
-				break;
-			case 'portfolio_tags':
-				if (isset($settings['settings']['tags'])) {
-					$tags            = array_map('intval', $settings['settings']['tags']);
-					$args[ 'tax_query' ] = array(
-						array(
-							'taxonomy' => 'portfolio_tags',
-							'field'    => 'term_id',
-							'terms'    => $tags,
-						),
-					);
-				}
-				$args['post_type'] = 'portfolio';
-				break;
-			case 'both_port':
-				if (isset($settings['settings']['categories'])) {
-					$categories           = array_map('intval', $settings['settings']['categories']);
-					$args[0][ 'tax_query' ] = array(
-						'relation' => 'OR',
-						array(
-							'taxonomy' => 'portfolio_categories',
-							'field'    => 'term_id',
-							'terms'    => $categories,
-						),
-					);
-					$args[0]['post_type']    = 'portfolio';
-				}
-				if (isset($settings['settings']['tags'])) {
-					$tags                 = array_map('intval', $settings['settings']['tags']);
-					$args[1][ 'tax_query' ] = array(
-						'relation' => 'OR',
-						array(
-							'taxonomy' => 'portfolio_tags',
-							'field'    => 'term_id',
-							'terms'    => $tags,
-						),
-					);
-					$args[1]['post_type'] = 'portfolio';
 				}
 				break;
 			default:

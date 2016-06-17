@@ -5,7 +5,7 @@
  * @package OtrsFilter\Autoloader
  */
 
-namespace OtrsFilter\Autoloader;
+namespace S7GreatFilter\Autoloader;
 
 /**
  * Class Autoloader
@@ -54,7 +54,7 @@ class Autoloader {
 		$cls = str_replace( '\\', '/', $cls );
 		$cls = explode( '/', $cls );
 
-		if ( isset( $cls[0] ) && 'OtrsFilter' === $cls[0]  ) {
+		if ( isset( $cls[0] ) && 'S7GreatFilter' === $cls[0]  ) {
 			array_shift( $cls );
 		}
 
