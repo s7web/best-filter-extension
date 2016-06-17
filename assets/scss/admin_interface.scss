@@ -1,0 +1,92 @@
+.ot_admin_form{
+  width: 50%;
+  .ot_remove_width{
+    width: auto !important;
+    margin-left: 6%;
+  }
+  .ot_slider{
+    margin-left: 6%;
+  }
+  #ot_posts_per_page_div{
+      margin-left: 6%;
+  }
+  label{
+    width: 15%;
+    text-align: right;
+    display: inline-block;
+  }
+  input[type=text]{
+    width: 40%;
+    display: inline-block;
+  }
+  .description{
+    width: 40%;
+    display: inline-block;
+  }
+  input[type=submit]{
+    margin-left: 6%;
+  }
+}
+.ui-accordion-header-icon{
+  display: none;
+}
+.ot_space_filter_buttons{
+  margin-left: 1%;
+  margin-top: 5px;
+}
+.ot_pagination_buttons{
+  width: 30%;
+  margin: 0 auto;
+  margin-top: 60px;
+}
+.ot_used_filters_cats{
+  height: 60px;
+}
+.ot_used_filters_tags{
+  margin-top: 10px;
+  height: 60px;
+  margin-bottom: 20px;
+}
+.otrs_master_container {
+  .otrs_filter_container {
+    margin-right: 2%;
+    margin-left: 2%;
+    min-height: 205px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    .otrs_filter_img_container {
+      img {
+        width: 220px;
+        height: auto;
+        font-size: 1.4em;
+        color: #CCCCCC;
+        line-height: 40px;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    a{
+      display: block;
+      padding-bottom: 20px;
+      color: #47aede;
+      text-decoration: none;
+      h1,h2,h3,h4,h5,h6{
+        color: #47aede;
+      }
+    }
+  }
+}
+.ot_trigger_cat, .ot_trigger_tag{
+  cursor: pointer;
+  i{
+    font-size: 18px;
+  }
+}
+.ot_filter_cat_container, .ot_filter_tag_container{
+  display: none;
+}
+.ot_filter_page{
+  font-size: 16px;
+}
